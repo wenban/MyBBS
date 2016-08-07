@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wenban.bbs.dao.TopicDAO">
+
+	<select id="selectOneTopic" resultType="topic">
+		select
+		t.id id,
+		t.TOPIC_NAME name,
+		t.DESCS descs,
+		t.CATEGORY_ID categoryId,
+		t.CHILD_CATEID childCateid,
+		t.UPDATE_TIME updateTime,
+		t.CREATE_TIME createTime,
+		t.USER_NAME userName,
+		t.IMAG_DIR imagDir,
+		t.SUMMARY summary
+		from
+		t_topic t
+		where ID=#{id}
+	</select>
+
+	<select id="selectTopicList" resultType="topic">
+		select t.ID id,
+		t.TOPIC_NAME name,
+		t.DESCS descs,
+		t.CATEGORY_ID categoryId,
+		t.CREATE_TIME createTime,
+		t.UPDATE_TIME updateTime,
+		t.USER_NAME userName,
+		t.IMAG_DIR imagDir,
+		t.SUMMARY summary,
+		c.CATE_NAME cateName
+		from
+		t_topic t,
+	    t_category c
+		where
+		CATEGORY_ID = #{id}
+        and 
+        t.CATEGORY_ID = c.ID
+		order by update_time desc
+	</select>
+	
+	<select id="selectTopicListByTopicname" resultType="topic">
+		select t.ID id,
+		t.TOPIC_NAME name,
+		t.DESCS descs,
+		t.CATEGORY_ID categoryId,
+		t.CREATE_TIME createTime,
+		t.UPDATE_TIME updateTime,
+		t.USER_NAME userName,
+		t.IMAG_DIR imagDir,
+		t.SUMMARY summary,
+		c.CATE_NAME cateName
+		from
+		t_topic t,
+	    t_category c
+		where TOPIC_NAME like CONCAT('%','${name}','%')
+        and 
+        t.CATEGORY_ID = c.ID
+		order by update_time desc
+	</select>
+
+	<select id="selectChildTopicList" resultType="topic">
+		select t.ID id,
+		t.TOPIC_NAME name,
+		t.DESCS descs,
+		t.CATEGORY_ID categoryId,
+		t.CREATE_TIME createTime,
+		t.UPDATE_TIME updateTime,
+		t.USER_NAME userName,
+		t.IMAG_DIR imagDir,
+		t.SUMMARY summary,
+		c.CATE_NAME cateName
+		from
+		t_topic t,
+	    t_category c
+		where
+		CHILD_CATEID = #{id}
+        and 
+        t.CHILD_CATEID = c.ID
+		order by update_time desc
+	</select>
+
+	<select id="selectalltopic" resultType="topic">
+		select t.ID id,
+		t.TOPIC_NAME name,
+		t.DESCS descs,
+		t.CATEGORY_ID categoryId,
+		t.CREATE_TIME createTime,
+		t.update_time updateTime,
+		t.USER_NAME userName,
+		t.IMAG_DIR imagDir,
+		t.SUMMARY summary
+		from
+		t_topic t
+		order by
+		update_time desc
+	</select>
+
+	<delete id="deleteTopicById">
+		delete from t_topic where id = #{id}
+	</delete>
+
+	<insert id="insertIntoTopic">
+		insert into t_topic
+		(topic_name,descs,create_time,category_id,child_cateid,summary)
+		values(
+		#{name},#{descs},now(),#{categoryId},#{childCateid},#{summary}
+		)
+	</insert>
+
+</mapper> 

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wenban.bbs.dao.ReplyDAO">
+
+	<insert id="insertIntoReply">
+		insert into t_reply
+		(topic_id,user_id,descs)
+		values(
+		#{topicId},#{userId},#{descs}
+		)
+	</insert>
+
+</mapper>
